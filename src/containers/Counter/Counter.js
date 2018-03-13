@@ -31,9 +31,18 @@ class Counter extends Component {
             <div>
                 <CounterOutput value={this.props.counter} />
                 <CounterControl label="Increment" clicked={this.props.increment} />
-                <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
-                <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
-                <CounterControl label="Subtract 5" clicked={() => this.counterChangedHandler( 'sub', 5 )}  />
+                <CounterControl label="Decrement" clicked={this.props.decrement}  />
+                <CounterControl label="Add 5" clicked={this.props.add}  />
+                <CounterControl label="Subtract 5" clicked={this.props.subtract}  />
+                <br />
+                <button onClick={this.props.showresult}>Show Result</button>
+                <ul>
+                  {this.props.results.map(result =>
+                  (<li
+                    key={result.id}
+                    onClick={this.props.deleteresult}>{result.value}</li>))}
+                  <li>result: {Object.keys(this.props.results).join(' , ')}</li>
+                </ul>
             </div>
         );
     }
@@ -41,14 +50,20 @@ class Counter extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    counter: state.counter
+    counter: state.counter,
+    results: state.results
   };
 };
 // zorgt dat je toegang hebt tot de state via props
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increment: () => dispatch({ type: 'INCREMENT' })
+    increment: () => dispatch({ type: 'INCREMENT' }),
+    decrement: () => dispatch({ type: 'DECREMENT'}),
+    add: () => dispatch({type: 'ADD', value: 5}),
+    subtract: () => dispatch({type: 'SUBTRACT', value: 5}),
+    showresult: () => dispatch({type: 'SHOW_RESULT'}),
+    deleteresult: () => dispatch({type: 'DELETE_RESULT'})
   }
 }
 // zorgt dat je toegang hebt tot de actions via props
