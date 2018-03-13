@@ -35,13 +35,12 @@ class Counter extends Component {
                 <CounterControl label="Add 5" clicked={this.props.add}  />
                 <CounterControl label="Subtract 5" clicked={this.props.subtract}  />
                 <br />
-                <button onClick={this.props.showresult}>Show Result</button>
+                <button onClick={() => this.props.showresult(this.props.counter)}>Show Result</button>
                 <ul>
                   {this.props.results.map(result =>
                   (<li
                     key={result.id}
-                    onClick={this.props.deleteresult}>{result.value}</li>))}
-                  <li>result: {Object.keys(this.props.results).join(' , ')}</li>
+                    onClick={() => this.props.deleteresult(result.id)}>{result.value}</li>))}
                 </ul>
             </div>
         );
@@ -50,8 +49,8 @@ class Counter extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    counter: state.counter,
-    results: state.results
+    counter: state.ctr.counter,
+    results: state.res.results
   };
 };
 // zorgt dat je toegang hebt tot de state via props
@@ -62,8 +61,8 @@ const mapDispatchToProps = (dispatch) => {
     decrement: () => dispatch({ type: 'DECREMENT'}),
     add: () => dispatch({type: 'ADD', value: 5}),
     subtract: () => dispatch({type: 'SUBTRACT', value: 5}),
-    showresult: () => dispatch({type: 'SHOW_RESULT'}),
-    deleteresult: () => dispatch({type: 'DELETE_RESULT'})
+    showresult: (result) => dispatch({type: 'SHOW_RESULT', result: result}),
+    deleteresult: (id) => dispatch({type: 'DELETE_RESULT', id: id})
   }
 }
 // zorgt dat je toegang hebt tot de actions via props
