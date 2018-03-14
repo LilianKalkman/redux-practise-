@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { increment, decrement, add, subtract, showresult, deleteresult } from '../../store/actions/actions';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
@@ -57,12 +58,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increment: () => dispatch({ type: 'INCREMENT' }),
-    decrement: () => dispatch({ type: 'DECREMENT'}),
-    add: () => dispatch({type: 'ADD', value: 5}),
-    subtract: () => dispatch({type: 'SUBTRACT', value: 5}),
-    showresult: (result) => dispatch({type: 'SHOW_RESULT', result: result}),
-    deleteresult: (id) => dispatch({type: 'DELETE_RESULT', id: id})
+    increment: () => dispatch(increment()),
+    decrement: () => dispatch(decrement()),
+    add: () => dispatch(add()),
+    subtract: () => dispatch(subtract()),
+    showresult: (result) => dispatch(showresult(result)),
+    deleteresult: (id) => dispatch(deleteresult(id))
   }
 }
 // zorgt dat je toegang hebt tot de actions via props
